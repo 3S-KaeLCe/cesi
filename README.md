@@ -150,6 +150,9 @@ Les tests d’intrusion se déroulent en plusieurs étapes, dont voici les élé
 ### Compte de service
 - Utiliser un compte SQL avec droit restreint (accès à la BDD de l'application uniquement, et droit restreint sur les mots clef SQL utilisables).
 - Utiliser un compte de service avec droit restreint sur le serveur pour lancer le service de l'application web (Apache, Nginx, Gunicorn, etc...)
+### Serveur de développement
+- On n'expose pas en production un serveur de développement. Par exemple, Flask en Python ne doit pas être exposé en mode développement, sinon une console permettant l'exécution de code python côté serveur sera exposé.
+- Côté FRONT, ne pas ajouter les fichiers .map (avec React par exemple) en production qui retournent le code FRONT du développeur tel qu'il est dans son IDE. Pour se faire, il faut ajouter ```"GENERATE_SOURCEMAP=false``` dans le fichier package.json, au niveau des clefs "script">"build".
 
 # Quelques commandes :
 
