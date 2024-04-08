@@ -123,6 +123,7 @@ Les tests d’intrusion se déroulent en plusieurs étapes, dont voici les élé
 ### Authentification
 - Utiliser BCrypt avec un sel
 - Privilégier les cookies signés pour les utilisateurs
+- Utiliser le flag "Secure" dans le cookie pour qu'il ne puisse pas être envoyé au travers du protocol HTTP en clair.
 - Si utilisation de JWT, ne pas s'appuyer sur l'algorithme défini dans le header côté serveur (celui-ci pourrait être remplacé par "None" par le client).
 - Utiliser un secret très long pour toute forme de signature (JWT ou cookie).
 - Définir une durée de vie limitée au cookie ou JWT.
