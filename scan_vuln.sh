@@ -63,3 +63,7 @@ xsltproc report -o report.html
 # On supprime les fichiers report et hosts.txt
 rm ./report
 rm ./hosts.txt
+
+# On déplace le rapport HTML généré dans /var/www/html pour l'exposer via le serveur web Apache
+mv ./report.html /var/www/html/index.html
+
