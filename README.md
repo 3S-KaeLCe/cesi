@@ -299,6 +299,15 @@ python3 xsstrike.py --header '{Cookie: lecookie}' -f ./payloads.txt -u http://ch
 xsser -u 'http://challenge01.root-me.org' -g '/web-client/ch24?nickname=toto&color=17&p=XSS'
 ```
 
+### Cracking de hashs
+
+==Hashcat==
+```
+curl https://raw.githubusercontent.com/josuamarcelc/common-password-list/main/rockyou.txt/rockyou_1.txt > rockyou.txt
+hashcat -h | grep NTML
+hashcat -a 0 -m 1000 b9f917853e3dbf6e6831ecce60725930 rockyou.txt
+```
+
 # Quelques liens utiles
 
 https://www.stationx.net/nmap-cheat-sheet/
