@@ -3,6 +3,8 @@ import base64
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad, unpad
 
+#pip install pycrypto
+
 import sys
 
 def main():
