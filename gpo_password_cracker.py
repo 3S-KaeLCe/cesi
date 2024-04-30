@@ -3,7 +3,7 @@ import base64
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad, unpad
 
-#pip install pycrypto
+#pip install pycryptodome
 
 import sys
 
