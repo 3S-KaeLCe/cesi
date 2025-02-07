@@ -98,7 +98,7 @@ Les tests d’intrusion se déroulent en plusieurs étapes, dont voici les élé
     - Elévation de privilège (accéder à des ressources restreintes auxquelles nous ne devrions pas pouvoir accéder)
     - Bypass authentication (se connecter sans fournir d’identifiant et/ou mot de passe)
     - Défaillance cryptographique (reforger un cookie ou un JWT, exploitation des collisions de hash dans les attaques bruteforce, et des défaillances cryptographiques)
-- **Scans complémentaires :** Nikto peut apporter quelques informations complémentaires à Nmap. Il en existe d’autres.
+- **Scans complémentaires :** Nikto, WPScan.
 - **Exploitations des CVE remontées :** ExploitDB
 
 # Sécurité du code
